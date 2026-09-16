@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07080c;
+  --color-elevated: #12141a;
+  --color-panel: #16181f;
+  --color-fg: #ecece8;
+  --color-muted: #8b8d96;
+  --color-subtle: #6b6e76;
+  --color-accent: #c8ccd4;
+  --color-accent-fg: #07080c;
+  --color-border: color-mix(in oklab, var(--color-fg) 12%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-fg) 22%, transparent);
+  --color-danger: #c9847a;
+
+  --font-sans: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-panel: 0 18px 40px rgba(0, 0, 0, 0.35);
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-micro: 80ms;
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --motion-slow: 400ms;
+  --motion-y-medium: 12px;
+  --motion-scale-modal: 0.96;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100dvh;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  canvas {
+    display: block;
+    touch-action: none;
+    user-select: none;
+  }
+}
+
+@layer components {
+  .hud-panel {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: color-mix(in oklab, var(--color-elevated) 92%, transparent);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .hud-chip {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: var(--radius-sm);
+    padding: 0 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    white-space: nowrap;
+    transition:
+      background-color var(--motion-quick) var(--ease-smooth-out),
+      color var(--motion-quick) var(--ease-smooth-out),
+      transform var(--motion-quick) var(--ease-out);
+  }
+
+  .hud-chip:hover {
+    color: var(--color-fg);
+    background: color-mix(in oklab, var(--color-fg) 6%, transparent);
+  }
+
+  .hud-chip:active {
+    transform: scale(0.96);
+  }
+
+  .hud-chip-active {
+    color: var(--color-accent-fg);
+    background: var(--color-accent);
+  }
+
+  .hud-chip-active:hover {
+    color: var(--color-accent-fg);
+    background: var(--color-accent);
+  }
+
+  .hud-icon-btn {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    color: var(--color-muted);
+    transition:
+      background-color var(--motion-quick) var(--ease-smooth-out),
+      color var(--motion-quick) var(--ease-smooth-out),
+      transform var(--motion-quick) var(--ease-out);
+  }
+
+  .hud-icon-btn:hover {
+    color: var(--color-fg);
+    background: color-mix(in oklab, var(--color-fg) 6%, transparent);
+  }
+
+  .hud-icon-btn:active {
+    transform: scale(0.96);
+  }
+
+  .hud-icon-btn-active {
+    color: var(--color-fg);
+    background: color-mix(in oklab, var(--color-fg) 10%, transparent);
+  }
+
+  .hud-btn-primary {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition:
+      opacity var(--motion-quick) var(--ease-out),
+      transform var(--motion-quick) var(--ease-out);
+  }
+
+  .hud-btn-primary:hover {
+    opacity: 0.92;
+  }
+
+  .hud-btn-primary:active {
+    transform: scale(0.96);
+  }
+
+  .hud-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2.5rem;
+    width: 100%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .hud-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--color-fg) 16%, transparent);
+  }
+
+  .hud-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -6px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-bg) 70%, transparent);
+  }
+
+  .hud-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--color-fg) 16%, transparent);
+  }
+
+  .hud-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--color-accent);
+  }
+
+  .mass-swatch {
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+  }
+
+  .mass-swatch[data-kind="dust"] {
+    background: #9aa3ad;
+  }
+  .mass-swatch[data-kind="asteroid"] {
+    background: #8a7a6b;
+  }
+  .mass-swatch[data-kind="moon"] {
+    background: #c5c8ce;
+  }
+  .mass-swatch[data-kind="planet"] {
+    background: #6a9bb8;
+  }
+  .mass-swatch[data-kind="giant"] {
+    background: #b07058;
+  }
+  .mass-swatch[data-kind="star"] {
+    background: #efe6d2;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stagger-item {
+    animation: overlay-enter var(--motion-slow) var(--ease-smooth-out) both;
+  }
+  .stagger-item:nth-child(1) {
+    animation-delay: 40ms;
+  }
+  .stagger-item:nth-child(2) {
+    animation-delay: 80ms;
+  }
+  .stagger-item:nth-child(3) {
+    animation-delay: 120ms;
+  }
+  .stagger-item:nth-child(4) {
+    animation-delay: 160ms;
+  }
+  .stagger-item:nth-child(5) {
+    animation-delay: 200ms;
+  }
+}
+
+@keyframes overlay-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-y-medium));
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-item {
+    animation: none;
+  }
+
+  .hud-chip,
+  .hud-icon-btn,
+  .hud-btn-primary {
+    transition: none;
+  }
+}
